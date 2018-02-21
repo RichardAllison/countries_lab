@@ -2,18 +2,23 @@
 <html>
   <head>
     <title>Country App</title>
-    <script src='index.js'></script>
     <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
+    <script src='index.js'></script>
+    <script type="text/javascript" src="map_wrapper.js"></script>
   </head>
   <body>
     <h1>Countries</h1>
     <select id='country-list'>
       <option value="select-country" selected disabled>Select country</option>
     </select>
-    <dl>
+    <section>
       <h2 id="name-display"></h2>
       <p id="population-display"></p>
       <p id="capital-display"></p>
-    </dl>
+    </section>
+    <section id="main-map">
+
+    </section>
   </body>
 </html>

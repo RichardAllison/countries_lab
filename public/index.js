@@ -14,12 +14,13 @@ const app = function(){
 
   const capital = document.getElementById("capital-display");
   capital.innerText = `Capital city: ${savedCountry.capital}`;
+
+  const mapDiv = document.querySelector('#main-map');
+
+  const map = new MapWrapper(mapDiv, {lat:0, lng:0}, 1);
+  console.log(map);
 }
 // -------------------
-
-const setDefinitionText = function(id, text) {
-
-}
 
 
 const makeRequest = function(url, callback) {
