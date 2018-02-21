@@ -3,8 +3,24 @@ const app = function(){
   const url = "https://restcountries.eu/rest/v2/all"
   makeRequest(url, requestComplete);
 
+  const jsonString = localStorage.getItem('country');
+  const savedCountry = JSON.parse(jsonString);
+
+  const name = document.getElementById("name-display");
+  name.innerText = savedCountry.name;
+
+  const population = document.getElementById("population-display");
+  population.innerText = `Population: ${savedCountry.population}`;
+
+  const capital = document.getElementById("capital-display");
+  capital.innerText = `Capital city: ${savedCountry.capital}`;
 }
 // -------------------
+
+const setDefinitionText = function(id, text) {
+
+}
+
 
 const makeRequest = function(url, callback) {
   const request = new XMLHttpRequest();
@@ -32,26 +48,30 @@ const populateList = function(countries){
   })
 
   select.addEventListener('change', function(){
-    displayCountryInfo(countries)});
+    displayCountryInfo(countries)
+  });
 }
 
 const displayCountryInfo = function(countries) {
   const index = document.getElementById('country-list').value;
   const country = countries[index];
 
-  const countrySection = document.getElementById("country-info");
+  // const countrySection = document.getElementById("country-info");
 
-  const name = document.createElement("h2");
+  const name = document.getElementById("name-display");
   name.innerText = country.name;
-  countrySection.appendChild(name);
+  // countrySection.appendChild(name);
 
-  const population = document.createElement("p");
-  population.innerText = country.population;
-  countrySection.appendChild(population);
+  const population = document.getElementById("population-display");
+  population.innerText = `Population: ${country.population}`;
+  // countrySection.appendChild(population);
 
-  const capital = document.createElement("p");
-  capital.innerText = country.capital;
-  countrySection.appendChild(capital);
+  const capital = document.getElementById("capital-display");
+  capital.innerText = `Capital city: ${country.capital}`;
+  // countrySection.appendChild(capital);
+
+  const jsonString = JSON.stringify(country);
+  localStorage.setItem('country', jsonString);
 
 }
 
