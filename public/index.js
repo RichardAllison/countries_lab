@@ -18,10 +18,10 @@ const app = function(){
   const mapDiv = document.querySelector('#main-map');
 
   const map = new MapWrapper(mapDiv, {lat:0, lng:0}, 1);
-  console.log(map);
 }
 // -------------------
 
+let map;
 
 const makeRequest = function(url, callback) {
   const request = new XMLHttpRequest();
@@ -49,7 +49,7 @@ const populateList = function(countries){
   })
 
   select.addEventListener('change', function(){
-    displayCountryInfo(countries)
+    displayCountryInfo(countries);
   });
 }
 
@@ -61,15 +61,18 @@ const displayCountryInfo = function(countries) {
 
   const name = document.getElementById("name-display");
   name.innerText = country.name;
-  // countrySection.appendChild(name);
 
   const population = document.getElementById("population-display");
   population.innerText = `Population: ${country.population}`;
-  // countrySection.appendChild(population);
 
   const capital = document.getElementById("capital-display");
   capital.innerText = `Capital city: ${country.capital}`;
-  // countrySection.appendChild(capital);
+
+  const coords = {lat: country.latlng[0], lng: country.latlng[1]};
+  const mapDiv = document.querySelector('#main-map');
+  const map = new MapWrapper(mapDiv, coords, 4);
+  map.addMarker(coords);
+
 
   const jsonString = JSON.stringify(country);
   localStorage.setItem('country', jsonString);
