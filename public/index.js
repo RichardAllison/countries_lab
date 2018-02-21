@@ -3,25 +3,32 @@ const app = function(){
   const url = "https://restcountries.eu/rest/v2/all"
   makeRequest(url, requestComplete);
 
-  const jsonString = localStorage.getItem('country');
-  const savedCountry = JSON.parse(jsonString);
-
-  const name = document.getElementById("name-display");
-  name.innerText = savedCountry.name;
-
-  const population = document.getElementById("population-display");
-  population.innerText = `Population: ${savedCountry.population}`;
-
-  const capital = document.getElementById("capital-display");
-  capital.innerText = `Capital city: ${savedCountry.capital}`;
-
   const mapDiv = document.querySelector('#main-map');
 
-  const map = new MapWrapper(mapDiv, {lat:0, lng:0}, 1);
+  if (localStorage.getItem('country')) {
+    const jsonString = localStorage.getItem('country');
+    const savedCountry = JSON.parse(jsonString);
+
+    coords = {lat: savedCountry.latlng[0], lng: savedCountry.latlng[1]}
+    const map = new MapWrapper(mapDiv, coords, 4);
+    map.addMarker(coords);
+
+    const name = document.getElementById("name-display");
+    name.innerText = savedCountry.name;
+
+    const population = document.getElementById("population-display");
+    population.innerText = `Population: ${savedCountry.population}`;
+
+    const capital = document.getElementById("capital-display");
+    capital.innerText = `Capital city: ${savedCountry.capital}`;
+  } else {
+    coords = {lat: 0, lng: 0}
+    const map = new MapWrapper(mapDiv, coords, 1);
+  }
+
+
 }
 // -------------------
-
-let map;
 
 const makeRequest = function(url, callback) {
   const request = new XMLHttpRequest();
